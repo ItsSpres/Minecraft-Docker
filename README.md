@@ -1,5 +1,8 @@
 # Minecraft Bedrock Server with Docker and Tailscale
 
+## About the Project
+I originally set out to make this project as a way for friends and family to play Minecraft together. Now, it has become a simple little project for my porfolio. I have provided a guide and resources to help setup your very own server if you wish. 
+
 ## Minecraft Bedrock Server Setup Guide
 
 This guide will help you set up a **Minecraft Bedrock Edition** server using Docker with Tailscale for secure access. Running your server in Docker provides isolation and portability, while Tailscale ensures private and secure connections to your server from anywhere.
