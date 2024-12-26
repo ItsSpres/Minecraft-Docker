@@ -1,8 +1,30 @@
 # Minecraft Bedrock Server with Docker and Tailscale
 
 ## About the Project
-I originally set out to make this project as a way for friends and family to play Minecraft together. Now, it has become a simple little project for my porfolio. I have provided a guide and resources to help setup your very own server if you wish. 
+# About My Minecraft Server Setup
 
+I decided to repurpose a used PC to host my Minecraft Bedrock Edition server, ensuring both performance and cost-effectiveness. Here's a brief overview of the hardware I used for this project:
+
+## Used PC Setup
+
+The PC I purchased features an **8GB RAM** configuration with a solid-state drive (SSD) for fast read/write speeds, ideal for handling the server’s demands. This setup allows me to run the Minecraft server smoothly while also ensuring that the server remains responsive during extended gaming sessions.
+
+### PC Specs:
+- **CPU**: Intel i5
+- **RAM**: 8 GB
+- **Storage**: 250 GB SSD
+- **Operating System**: Windows 10
+
+![Used PC Setup](https://via.placeholder.com/400x300)  
+*Insert actual photo of your used PC setup*
+
+### Installation and Performance
+I added an SSD to the system for better performance and faster load times. The SSD ensures that the server runs efficiently, even when handling large worlds or multiple players at once.
+
+![SSD Installation](https://via.placeholder.com/400x300)  
+*Insert actual photo of your SSD installation*
+
+With this used PC, I was able to create a reliable and secure Minecraft server environment without breaking the bank, making it perfect for hosting private multiplayer sessions.
 ## Minecraft Bedrock Server Setup Guide
 
 This guide will help you set up a **Minecraft Bedrock Edition** server using Docker with Tailscale for secure access. Running your server in Docker provides isolation and portability, while Tailscale ensures private and secure connections to your server from anywhere.
