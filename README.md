@@ -1,7 +1,6 @@
 # Minecraft Bedrock Server with Docker and Tailscale
 
 ## About the Project
-# About My Minecraft Server Setup
 
 I decided to repurpose a used PC to host my Minecraft Bedrock Edition server, ensuring both performance and cost-effectiveness. Here's a brief overview of the hardware I used for this project:
 
