@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  mc-server:
+    build: .
+    ports:
+      - "19132:19132/udp"
+      - "19132:19132/tcp"
+    environment:
+      TAILSCALE_AUTH_KEY: "<your-auth-key>"
+    env_file:
+      - .env
+    volumes:
+      - ./backups:/minecraft/backups
