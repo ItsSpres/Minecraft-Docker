@@ -1,7 +1,11 @@
 #!/bin/bash
 
-# Start the Minecraft server
-echo "Starting Minecraft Server..."
+# Start Tailscale
+tailscaled & sleep 5
+tailscale up --authkey=${TAILSCALE_AUTH_KEY}
+
+# Start Minecraft server
+echo "Starting Minecraft Bedrock Server..."
 ./bedrock_server &
 
 # Backup loop

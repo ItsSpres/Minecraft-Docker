@@ -1,13 +1,16 @@
 version: '3.8'
+
 services:
   mc-server:
     build: .
+    container_name: mc-server
+    environment:
+      - TAILSCALE_AUTH_KEY=${TAILSCALE_AUTH_KEY}
+      - MC_SERVER_NAME=${MC_SERVER_NAME}
+      - MC_MAX_PLAYERS=${MC_MAX_PLAYERS}
+      - BACKUP_INTERVAL=${BACKUP_INTERVAL}
+    volumes:
+      - /Users/IanSpresney/Desktop/MCBackups:/app/backups
     ports:
       - "19132:19132/udp"
-      - "19132:19132/tcp"
-    environment:
-      TAILSCALE_AUTH_KEY: "<your-auth-key>"
-    env_file:
-      - .env
-    volumes:
-      - ./backups:/minecraft/backups
+    restart: always
