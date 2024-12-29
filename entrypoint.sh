@@ -1,18 +1,13 @@
 #!/bin/bash
 
-# Start Tailscale
-tailscaled & sleep 5
-tailscale up --authkey=${TAILSCALE_AUTH_KEY}
+# Start Tailscale in the background
+tailscaled --state=/var/lib/tailscale/tailscaled.state &
 
-# Start Minecraft server
-echo "Starting Minecraft Bedrock Server..."
-./bedrock_server &
+# Wait for Tailscale to initialize
+sleep 5
 
-# Backup loop
-while true; do
-    echo "Performing backup..."
-    timestamp=$(date +"%Y%m%d_%H%M%S")
-    cp -r /app/world /app/backups/world_$timestamp
-    echo "Backup completed at $timestamp."
-    sleep ${BACKUP_INTERVAL}m
-done
+# Authenticate with Tailscale using the provided auth key
+tailscale up --authkey=$TS_AUTH_KEY
+
+# Start Minecraft Bedrock server
+/app/bedrock-server-1/bedrock_server

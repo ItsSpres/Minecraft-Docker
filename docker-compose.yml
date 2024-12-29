@@ -1,16 +1,45 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  mc-server:
-    build: .
-    container_name: mc-server
-    environment:
-      - TAILSCALE_AUTH_KEY=${TAILSCALE_AUTH_KEY}
-      - MC_SERVER_NAME=${MC_SERVER_NAME}
-      - MC_MAX_PLAYERS=${MC_MAX_PLAYERS}
-      - BACKUP_INTERVAL=${BACKUP_INTERVAL}
+  tailscale:
+    image: tailscale/tailscale:stable
+    container_name: tailscale
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    security_opt:
+      - apparmor:unconfined
     volumes:
-      - /Users/IanSpresney/Desktop/MCBackups:/app/backups
+      - /dev/net/tun:/dev/net/tun
+      - ./tailscale-state:/var/lib/tailscale
+    network_mode: "host"
+    environment:
+      - TS_AUTH_KEY=${TS_AUTH_KEY}
+    command: tailscaled --state=/var/lib/tailscale/tailscaled.state
+
+  minecraft:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: minecraft-bedrock
+    depends_on:
+      - tailscale
     ports:
-      - "19132:19132/udp"
+      - "19132:19132/udp"  # Minecraft Bedrock Port
+    volumes:
+      - ./bedrock-server-1:/app/bedrock-server-1
+      - ./minecraft_data:/data  # Store data for persistence
+    environment:
+      EULA: "TRUE"
+      GAMEMODE: "survival"
+      DIFFICULTY: "easy"
+      ENABLE_BACKUPS: "true"
+      BACKUP_INTERVAL: "15m"
+      ONLINE_MODE: "false"  # Disable Mojang authentication for local play
     restart: always
+    networks:
+      - minecraft-network
+
+networks:
+  minecraft-network:
+    external: true

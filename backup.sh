@@ -1,11 +1,14 @@
 #!/bin/bash
-TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
-BACKUP_DIR=/minecraft/backups
+
+BACKUP_DIR="/data/backups"
+WORLD_DIR="/data/worlds"
+
+# Make sure the backup directory exists
 mkdir -p $BACKUP_DIR
 
-# Use screen command to save the game
-screen -S mc-server -X stuff "save hold^M"
-sleep 5
-screen -S mc-server -X stuff "save query^M"
-cp -r /minecraft/world $BACKUP_DIR/world_$TIMESTAMP
-screen -S mc-server -X stuff "save resume^M"
+# Get the current timestamp
+TIMESTAMP=$(date +%Y%m%d%H%M%S)
+
+# Backup world data
+cp -r $WORLD_DIR $BACKUP_DIR/world_$TIMESTAMP
+echo "Backup completed at $TIMESTAMP"
