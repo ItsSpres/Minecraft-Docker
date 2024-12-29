@@ -1,14 +1,13 @@
 #!/bin/bash
 
-BACKUP_DIR="/data/backups"
-WORLD_DIR="/data/worlds"
+# Set backup folder path (this is the mounted directory in the container)
+BACKUP_DIR="/app/backups"
+SERVER_DIR="/app/bedrock-server-1"
 
-# Make sure the backup directory exists
-mkdir -p $BACKUP_DIR
+# Create a timestamp for the backup file
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 
-# Get the current timestamp
-TIMESTAMP=$(date +%Y%m%d%H%M%S)
+# Create the backup file (e.g., zip the entire server directory)
+zip -r "$BACKUP_DIR/backup_$TIMESTAMP.zip" "$SERVER_DIR"
 
-# Backup world data
-cp -r $WORLD_DIR $BACKUP_DIR/world_$TIMESTAMP
-echo "Backup completed at $TIMESTAMP"
+echo "Backup completed successfully at $TIMESTAMP"

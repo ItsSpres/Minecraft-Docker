@@ -1,45 +1,15 @@
-version: "3.8"
+version: '3'
 
 services:
-  tailscale:
-    image: tailscale/tailscale:stable
-    container_name: tailscale
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    security_opt:
-      - apparmor:unconfined
-    volumes:
-      - /dev/net/tun:/dev/net/tun
-      - ./tailscale-state:/var/lib/tailscale
-    network_mode: "host"
-    environment:
-      - TS_AUTH_KEY=${TS_AUTH_KEY}
-    command: tailscaled --state=/var/lib/tailscale/tailscaled.state
-
   minecraft:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: minecraft-bedrock
-    depends_on:
-      - tailscale
+    build: .
+    container_name: minecraft-bedrock-server
     ports:
-      - "19132:19132/udp"  # Minecraft Bedrock Port
+      - "19132:19132/udp"
+    environment:
+      - TAILSCALE_AUTH_KEY=${TAILSCALE_AUTH_KEY}
+    network_mode: "host"  # Use host network mode to allow Tailscale to manage network traffic
     volumes:
       - ./bedrock-server-1:/app/bedrock-server-1
-      - ./minecraft_data:/data  # Store data for persistence
-    environment:
-      EULA: "TRUE"
-      GAMEMODE: "survival"
-      DIFFICULTY: "easy"
-      ENABLE_BACKUPS: "true"
-      BACKUP_INTERVAL: "15m"
-      ONLINE_MODE: "false"  # Disable Mojang authentication for local play
-    restart: always
-    networks:
-      - minecraft-network
-
-networks:
-  minecraft-network:
-    external: true
+      - ~/Desktop/Minecraft-Backups:/app/backups  # Mount local backup folder to container
+    restart: unless-stopped

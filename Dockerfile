@@ -1,7 +1,7 @@
-# Use Ubuntu as the base image
+# Use an Ubuntu base image
 FROM ubuntu:20.04
 
-# Install dependencies
+# Install required packages
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
@@ -11,24 +11,17 @@ RUN apt-get update && apt-get install -y \
     tailscale \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Copy Minecraft Bedrock server files into the container
-COPY bedrock-server-1/ /app/bedrock-server-1/
+# Copy the zip file into the container
+COPY bedrock-server-1.zip /app/
 
-# Ensure the server file is executable
-RUN chmod +x /app/bedrock-server-1/bedrock_server
+# Unzip the server files
+RUN unzip bedrock-server-1.zip -d /app/bedrock-server-1 && rm bedrock-server-1.zip
 
-# Expose Minecraft server port
-EXPOSE 19132/udp
+# Expose the Minecraft Bedrock Edition server port
+EXPOSE 19132
 
-# Expose Tailscale ports (optional)
-# EXPOSE 41641
-
-# Add entrypoint for Tailscale and Minecraft server startup
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# Start Tailscale and Minecraft Server
-ENTRYPOINT ["/entrypoint.sh"]
+# Set the entrypoint
+ENTRYPOINT ["/bin/bash", "/app/entrypoint.sh"]
