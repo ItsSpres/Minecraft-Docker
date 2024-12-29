@@ -2,14 +2,15 @@
 FROM ubuntu:20.04
 
 # Install required packages
-RUN apt-get update && apt-get install -y \
+RUN curl -fsSL https://tailscale.com/install.sh | sh && \
+    apt-get update && \
+    apt-get install -y \
     curl \
     unzip \
     socat \
     cron \
-    iputils-ping \
-    tailscale \
-    && rm -rf /var/lib/apt/lists/*
+    iputils-ping && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
