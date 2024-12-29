@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install Minecraft Bedrock server
 WORKDIR /app
-RUN curl -o bedrock_server.zip https://minecraft.azureedge.net/bin-linux/bedrock-server-1.20.32.03.zip
+RUN curl -o bedrock_server.zip https://minecraft.azureedge.net/bin-linux/bedrock_server-1.21.51.02.zip
 RUN unzip bedrock_server.zip && rm bedrock_server.zip
 
 # Add entrypoint script
